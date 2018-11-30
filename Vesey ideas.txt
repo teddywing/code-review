@@ -1,0 +1,36 @@
+Reviewing PR 54:
+$ vesey 54
+
+git worktree add pr/54
+git difftool -t vimdiff master..
+or
+git diff | vim -
+git difftool -t vimdiff -x 'vimdiff -c "wincmd c"'
+
+or git diff and <Enter> opens a vimdiff of that file
+
+
+Use vdwrap
+
+
+Interface to list commits. Clicking <Enter> on a commit opens the changeset in Vim
+	Maybe tig?
+
+
+In vimdiff view, a key command opens the browser with a comment textarea on that line in the diff.
+
+
+https://github.com/Microsoft/vscode-pull-request-github
+https://developer.github.com/v3/pulls/comments/
+
+
+UI ideas:
+
+$ git review 54
+	> git worktree add pr/54
+	> cd worktree
+$ git diff-pr
+	> git difftool -t vimdiff -x vdwrap [$@ or master..]
+$ github-write-pr-comments
+	> Write comments from PR as comment lines in source files
+	> Cache comments separately from source files. System for adding updates.
