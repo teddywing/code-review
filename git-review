@@ -1,0 +1,18 @@
+#!/bin/sh
+
+EX_USAGE=64
+
+git-review () {
+	if [ "$#" -ne 1 ]; then
+		return $EX_USAGE
+	fi
+
+	local pr_id="$1"
+	local path="$(git rev-parse --show-toplevel)"
+	local worktree_dir="$path+review-$pr_id"
+
+	git fetch origin pull/$pr_id/head:pr/$pr_id \
+		&& git worktree add "$worktree_dir" pr/$pr_id
+
+	cd "$worktree_dir"
+}
