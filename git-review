@@ -1,8 +1,8 @@
 #!/bin/sh
 
-EX_USAGE=64
-
 git-review () {
+	local EX_USAGE=64
+
 	if [ "$#" -ne 1 ]; then
 		return $EX_USAGE
 	fi
