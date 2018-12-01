@@ -34,3 +34,10 @@ $ git diff-pr
 $ github-write-pr-comments
 	> Write comments from PR as comment lines in source files
 	> Cache comments separately from source files. System for adding updates.
+
+
+$ review start 54
+$ review diff
+$ review load-comments
+$ review [end/finish/stop]
+	> Removes worktree
