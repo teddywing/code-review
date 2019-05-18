@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+REVIEW_BASE=master..
+
+if [ $# -gt 1 ]; then
+	REVIEW_BASE="$1"
+fi
+
+git -c difftool.vdwrap.cmd='vdwrap $LOCAL $REMOTE' \
+	-c diff.tool=vdwrap \
+	difftool -t vdwrap --dir-diff "$REVIEW_BASE"
+
+# git diff --stat "$REVIEW_BASE"
