@@ -10,4 +10,6 @@ git -c difftool.vdwrap.cmd='vdwrap $LOCAL $REMOTE' \
 	-c diff.tool=vdwrap \
 	difftool -t vdwrap --dir-diff "$REVIEW_BASE"
 
+# tabdo :wincmd b
+
 # git diff --stat "$REVIEW_BASE"
