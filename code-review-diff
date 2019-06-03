@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ARGS='master..'
+
+if [ "$#" -gt 0 ]; then
+	ARGS="$@"
+fi
+
+git diff "$ARGS"
