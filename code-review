@@ -13,6 +13,8 @@ function program_exists () {
 program="code-review"
 subcommand="$1"
 
+shift
+
 if [ -z "$subcommand" ]; then
 	echo 'TODO: print usage'
 	exit "$EX_USAGE"
@@ -23,4 +25,4 @@ if ! program_exists "${program}-${subcommand}"; then
 	exit "$EX_USAGE"
 fi
 
-eval "${program}-${subcommand}"
+eval "${program}-${subcommand}" "$@"
