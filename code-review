@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+EX_USAGE=64
+
+
+function program_exists () {
+	local program="$1"
+
+	command -v "$program" > /dev/null
+}
+
+
+program="code-review"
+subcommand="$1"
+
+if [ -z "$subcommand" ]; then
+	echo 'TODO: print usage'
+	exit "$EX_USAGE"
+fi
+
+if ! program_exists "${program}-${subcommand}"; then
+	echo >&2 "${program}: '${subcommand}' is not a ${program} command. See '${program} --help'"
+	exit "$EX_USAGE"
+fi
+
+eval "${program}-${subcommand}"
