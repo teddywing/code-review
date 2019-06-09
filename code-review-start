@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # TODO: save base branch (default to origin/master) paired with current branch.
 # Subsequent code-review commands should use this base branch.
@@ -7,82 +7,11 @@
 # subcommand.
 
 
-GIT_ROOT="$(git rev-parse --show-toplevel)"
-DATABASE="${GIT_ROOT}/.git/info/code-review.sqlite"
-
-function create_database () {
-	sqlite3 "$DATABASE" <<-SQL
-		BEGIN TRANSACTION;
-
-		CREATE TABLE IF NOT EXISTS merge_bases (
-			id INTEGER PRIMARY KEY,
-			head TEXT NOT NULL,
-			base TEXT NOT NULL
-		);
-
-		COMMIT;
-	SQL
-}
-
-function create_database_if_not_exists () {
-	if [ ! -f "$DATABASE" ]; then
-		create_database
-	fi
-}
-
-function create_merge_base () {
-	local head="$1"
-	local base="$2"
-
-	# TODO: Change to upsert or equivalent
-	sqlite3 "$DATABASE" <<-SQL
-		BEGIN TRANSACTION;
-
-		INSERT INTO merge_bases
-			(head, base)
-		VALUES
-			(
-				'$head',
-				'$base'
-			);
-
-		COMMIT;
-	SQL
-}
-
-function create_merge_base_from_current () {
-	local base="$1"
-
-	create_merge_base "$(current_branch)" "$base"
-}
-
-function get_merge_base () {
-	local head="$(current_branch)"
-	local default_base='master'
-
-	if git config remote.origin.url > /dev/null; then
-		default_base='origin/master'
-	fi
-
-	sqlite3 "$DATABASE" <<-SQL
-		BEGIN TRANSACTION;
-
-		SELECT ifnull(max(base), '$default_base')
-		FROM merge_bases
-		WHERE head = '$head'
-		LIMIT 1;
-
-		COMMIT;
-	SQL
-}
-
-function current_branch () {
-	git rev-parse --abbrev-ref HEAD
-}
+SCRIPT="$(dirname "$0")"
+source "$SCRIPT/code-review-database"
 
 
 create_database_if_not_exists
-
 
 merge_base='origin/master'
 if [ $# -eq 1 ]; then
