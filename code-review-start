@@ -52,9 +52,32 @@ function create_merge_base () {
 
 function create_merge_base_from_current () {
 	local base="$1"
-	local current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-	create_merge_base "$current_branch" "$base"
+	create_merge_base "$(current_branch)" "$base"
+}
+
+function get_merge_base () {
+	local head="$(current_branch)"
+	local default_base='master'
+
+	if git config remote.origin.url > /dev/null; then
+		default_base='origin/master'
+	fi
+
+	sqlite3 "$DATABASE" <<-SQL
+		BEGIN TRANSACTION;
+
+		SELECT ifnull(max(base), '$default_base')
+		FROM merge_bases
+		WHERE head = '$head'
+		LIMIT 1;
+
+		COMMIT;
+	SQL
+}
+
+function current_branch () {
+	git rev-parse --abbrev-ref HEAD
 }
 
 
