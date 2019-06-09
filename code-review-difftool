@@ -9,4 +9,4 @@ fi
 # TODO: Use `code-review-changed-files` instead of `git diff --name-only`
 # TODO: Can't replace single dots as those could be part of a branch name
 # vim -c 'tabdo Gdiff ${REVIEW_BASE/./}' -p $(git diff --name-only "$REVIEW_BASE")
-vim -c 'tabdo Gdiff origin/master' -p $(git diff --name-only origin/master..)
+vim -c 'tabdo Gdiff origin/master' -p $(git diff --name-only origin/master)
