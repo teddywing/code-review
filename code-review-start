@@ -13,9 +13,7 @@ source "$SCRIPT/code-review-database"
 
 create_database_if_not_exists
 
-merge_base='origin/master'
 if [ $# -eq 1 ]; then
 	merge_base="$1"
+	create_merge_base_from_current "$merge_base"
 fi
-
-create_merge_base_from_current "$merge_base"
