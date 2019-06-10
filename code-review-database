@@ -44,7 +44,6 @@ function create_merge_base () {
 	local head="$1"
 	local base="$2"
 
-	# TODO: Change to upsert or equivalent
 	sqlite3 "$DATABASE" <<-SQL
 		BEGIN TRANSACTION;
 
