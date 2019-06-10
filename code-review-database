@@ -31,13 +31,16 @@ function create_merge_base () {
 	sqlite3 "$DATABASE" <<-SQL
 		BEGIN TRANSACTION;
 
+		UPDATE merge_bases
+		SET base = '$base'
+		WHERE head = '$head';
+
 		INSERT INTO merge_bases
 			(head, base)
-		VALUES
-			(
-				'$head',
-				'$base'
-			);
+		SELECT
+			'$head',
+			'$base'
+		WHERE (SELECT changes() = 0);
 
 		COMMIT;
 	SQL
