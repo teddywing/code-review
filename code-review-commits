@@ -1,9 +1,7 @@
 #!/bin/sh
 
-ARGS='master..'
+SCRIPT="$(dirname "$0")"
+source "$SCRIPT/code-review-database"
 
-if [ "$#" -gt 0 ]; then
-	ARGS="$@"
-fi
 
-git log --oneline "$@"
+git log --oneline "$(get_merge_base)"

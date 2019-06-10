@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-REVIEW_BASE=master..
+SCRIPT="$(dirname "$0")"
+source "$SCRIPT/code-review-database"
 
-if [ $# -gt 1 ]; then
-	REVIEW_BASE="$1"
-fi
+
+review_base="$(get_merge_base)"
 
 # TODO: Use `code-review-changed-files` instead of `git diff --name-only`
 # TODO: Can't replace single dots as those could be part of a branch name
 # vim -c 'tabdo Gdiff ${REVIEW_BASE/./}' -p $(git diff --name-only "$REVIEW_BASE")
-vim -c 'tabdo Gdiff origin/master' -p $(git diff --name-only origin/master)
+vim -c "tabdo Gdiff $review_base" -p $(git diff --name-only $review_base)
