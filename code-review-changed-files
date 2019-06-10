@@ -1,10 +1,8 @@
 #!/bin/sh
 
-git diff --name-only "$@"
+SCRIPT="$(dirname "$0")"
+source "$SCRIPT/code-review-database"
 
-# Use absolute path in case the PWD is not the Git root
-sed "s,/^,$(git rev-parse --show-toplevel),"
-$(git rev-parse --show-toplevel)
-awk '{ print "[CMD]" $0 }'
 
-git changed-files master.. | grep '_test\.go$' | awk -v git_root=$(git rev-parse --show-toplevel) '{ print git_root "/" $0 }'
+git diff --name-only "$(get_merge_base)" |
+	awk -v git_root="$GIT_ROOT" '{ print git_root "/" $0 }'
