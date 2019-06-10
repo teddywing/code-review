@@ -45,8 +45,6 @@ function program_exists () {
 program="code-review"
 subcommand="$1"
 
-shift
-
 if [ -z "$subcommand" ] || [ "$1" = '--help' ] || [ "$1" = '-h' ]; then
 	print_usage
 	exit "$EX_USAGE"
@@ -57,4 +55,5 @@ if ! program_exists "${program}-${subcommand}"; then
 	exit "$EX_USAGE"
 fi
 
+shift
 eval "${program}-${subcommand}" "$@"
