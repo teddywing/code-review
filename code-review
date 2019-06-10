@@ -3,6 +3,21 @@
 EX_USAGE=64
 
 
+function print_usage () {
+	cat <<-EOF
+		usage: code-review [--help] <command> [<args>]
+
+		Commands:
+
+		changed-files   List names of files changed
+		commits         One-line log of commits
+		diff            Unified diff of changes
+		difftool        Diff of all changes with Vim and Fugitive
+		start           Start a review with a given base revision
+		stat            Stat file changes
+	EOF
+}
+
 function program_exists () {
 	local program="$1"
 
@@ -15,8 +30,8 @@ subcommand="$1"
 
 shift
 
-if [ -z "$subcommand" ]; then
-	echo 'TODO: print usage'
+if [ -z "$subcommand" ] || [ "$1" = '--help' ] || [ "$1" = '-h' ]; then
+	print_usage
 	exit "$EX_USAGE"
 fi
 
