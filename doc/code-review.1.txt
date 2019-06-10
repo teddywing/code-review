@@ -1,0 +1,34 @@
+code-review(1)
+==============
+
+NAME
+----
+code-review - Tools for code review
+
+SYNOPSIS
+--------
+*code-review* [--help] <command> [<args>]
+
+DESCRIPTION
+-----------
+A collection of tools that facilitate code review on the command line.
+
+OPTIONS
+-------
+-h, --help::
+	Print usage help.
+
+COMMANDS
+--------
+changed-files::
+	List names of files changed
+commits::
+	One-line log of commits
+diff::
+	Unified diff of changes
+difftool::
+	Diff of all changes with Vim and Fugitive
+start::
+	Start a review with a given base revision
+stat::
+	Stat file changes
