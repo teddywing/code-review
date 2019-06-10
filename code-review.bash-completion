@@ -1,0 +1,20 @@
+function _code_review () {
+	local cur
+	local subcommands="changed-files commits diff difftool start stat"
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+
+	case "$COMP_CWORD" in
+	1 | 2)
+		COMPREPLY=( $( compgen -W "$subcommands" -- $cur ) )
+		;;
+	3)
+		COMPREPLY=()
+		;;
+	esac
+
+	return 0
+}
+
+complete -o default -F _code_review code-review
