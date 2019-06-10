@@ -6,7 +6,4 @@ source "$SCRIPT/code-review-database"
 
 review_base="$(get_merge_base)"
 
-# TODO: Use `code-review-changed-files` instead of `git diff --name-only`
-# TODO: Can't replace single dots as those could be part of a branch name
-# vim -c 'tabdo Gdiff ${REVIEW_BASE/./}' -p $(git diff --name-only "$REVIEW_BASE")
 vim -c "tabdo Gdiff $review_base" -p $(code-review changed-files)
