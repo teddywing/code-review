@@ -18,6 +18,9 @@ OPTIONS
 -h, --help::
 	Print usage help.
 
+--version::
+	Print the program version.
+
 COMMANDS
 --------
 changed-files::

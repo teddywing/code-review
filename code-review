@@ -19,10 +19,12 @@
 
 EX_USAGE=64
 
+VERSION=0.0.1
+
 
 function print_usage () {
 	cat <<-EOF
-		usage: code-review [--help] <command> [<args>]
+		usage: code-review [--help] [--version] <command> [<args>]
 
 		Commands:
 
@@ -48,6 +50,11 @@ subcommand="$1"
 if [ -z "$subcommand" ] || [ "$1" = '--help' ] || [ "$1" = '-h' ]; then
 	print_usage
 	exit "$EX_USAGE"
+fi
+
+if [ "$1" = '--version' ]; then
+	echo "$VERSION"
+	exit 0
 fi
 
 if ! program_exists "${program}-${subcommand}"; then
