@@ -91,3 +91,6 @@ function get_merge_base () {
 function current_branch () {
 	git rev-parse --abbrev-ref HEAD
 }
+
+
+create_database_if_not_exists
