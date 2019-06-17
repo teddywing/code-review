@@ -21,11 +21,6 @@ SCRIPT="$(dirname "$0")"
 source "$SCRIPT/code-review-database"
 
 
-# shopt -s extglob
-# echo "${y%%?(..|...)}"
-# shopt -u extglob
-
-
 review_base="$(get_merge_base)"
 
 # Remove dot ranges at the end of a revision as Fugitive doesn't support them.
