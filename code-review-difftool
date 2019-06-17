@@ -21,6 +21,16 @@ SCRIPT="$(dirname "$0")"
 source "$SCRIPT/code-review-database"
 
 
+# shopt -s extglob
+# echo "${y%%?(..|...)}"
+# shopt -u extglob
+
+
 review_base="$(get_merge_base)"
 
-vim -c "tabdo Gdiff $review_base" -p $(code-review changed-files)
+# Remove dot ranges at the end of a revision as Fugitive doesn't support them.
+shopt -s extglob
+review_base_without_dots="${review_base%%?(..|...)}"
+shopt -u extglob
+
+vim -c "tabdo Gdiff $review_base_without_dots" -p $(code-review changed-files)
