@@ -24,15 +24,7 @@ source "$SCRIPT/code-review-database"
 review_base="$(get_merge_base)"
 
 # Remove dot ranges at the end of a revision as Fugitive doesn't support them.
-shopt -p extglob
-has_extglob=$?
-
-if [ $has_extglob -ne 0 ]; then
-	shopt -s extglob
-fi
+shopt -s extglob
 review_base_without_dots="${review_base%%?(..|...)}"
-if [ $has_extglob -ne 0 ]; then
-	shopt -u extglob
-fi
 
 vim -c "tabdo Gdiff $review_base_without_dots" -p $(code-review changed-files)
