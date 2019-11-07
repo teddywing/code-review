@@ -27,4 +27,7 @@ review_base="$(get_merge_base)"
 shopt -s extglob
 review_base_without_dots="${review_base%%?(..|...)}"
 
-vim -c "tabdo Gdiff $review_base_without_dots" -p $(code-review changed-files)
+vim \
+	-n \
+	-c "tabdo Gdiff $review_base_without_dots" \
+	-p $(code-review changed-files)
