@@ -35,3 +35,5 @@ function _code_review () {
 }
 
 complete -o default -F _code_review code-review
+
+# TODO: Add Git ref completion to rv start
