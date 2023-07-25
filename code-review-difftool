@@ -29,5 +29,5 @@ review_base_without_dots="${review_base%%?(..|...)}"
 
 vim \
 	-n \
-	-c "tabdo Gdiff $review_base_without_dots" \
+	-c "tabdo Gvdiffsplit $review_base_without_dots" \
 	-p $(code-review changed-files)
