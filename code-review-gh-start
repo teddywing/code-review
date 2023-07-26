@@ -22,4 +22,9 @@
 
 merge_base='TODO'
 
+# Filter pull requests with .head.ref corresponding to current branch name, and
+# get the .base.ref as the merge base.
+#
+# gh api repos/:owner/:repo/pulls --jq=".[] | [.head.ref, .base.ref] | @tsv"
+
 code-review-start "$merge_base"
