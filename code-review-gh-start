@@ -17,14 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Code Review. If not, see <https://www.gnu.org/licenses/>.
 
-# Like code-review-start, but get the merge base from the associate GitHub pull
-# request.
 
-merge_base='TODO'
+# Like code-review-start, but get the merge base from the associated GitHub
+# pull request.
 
-# Filter pull requests with .head.ref corresponding to current branch name, and
-# get the .base.ref as the merge base.
-#
-# gh api repos/:owner/:repo/pulls --jq=".[] | [.head.ref, .base.ref] | @tsv"
+current_branch_name() {
+	git rev-parse --abbrev-ref HEAD
+}
 
-code-review-start "$merge_base"
+github_merge_base() {
+	# Find a pull request with a HEAD branch matching the name of the current
+	# branch. Get that pull request's base (merge target) branch.
+	gh api \
+		repos/:owner/:repo/pulls \
+		--jq=".[]
+			| select(.head.ref == \"$(current_branch_name)\")
+			| .base.ref"
+}
+
+code-review-start "$(github_merge_base)"
