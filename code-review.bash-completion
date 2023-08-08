@@ -17,7 +17,7 @@
 
 function _code_review () {
 	local cur
-	local subcommands="changed-files commits diff difftool log start stat"
+	local subcommands="changed-files commits diff difftool gh-start log start stat"
 
 	COMPREPLY=()
 	cur=${COMP_WORDS[COMP_CWORD]}
