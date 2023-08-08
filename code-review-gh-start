@@ -1,4 +1,6 @@
-# Copyright (c) 2019, 2023  Teddy Wing
+#!/bin/sh
+
+# Copyright (c) 2023  Teddy Wing
 #
 # This file is part of Code Review.
 #
@@ -15,25 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Code Review. If not, see <https://www.gnu.org/licenses/>.
 
-function _code_review () {
-	local cur
-	local subcommands="changed-files commits diff difftool gh-start log start stat"
 
-	COMPREPLY=()
-	cur=${COMP_WORDS[COMP_CWORD]}
+# Like code-review-start, but get the merge base from the associated GitHub
+# pull request.
 
-	case "$COMP_CWORD" in
-	1 | 2)
-		COMPREPLY=( $( compgen -W "$subcommands" -- $cur ) )
-		;;
-	3)
-		COMPREPLY=()
-		;;
-	esac
-
-	return 0
+current_branch_name() {
+	git rev-parse --abbrev-ref HEAD
 }
 
-complete -o default -F _code_review code-review
+github_merge_base() {
+	# Find a pull request with a HEAD branch matching the name of the current
+	# branch. Get that pull request's base (merge target) branch.
+	gh api \
+		repos/:owner/:repo/pulls \
+		--jq=".[]
+			| select(.head.ref == \"$(current_branch_name)\")
+			| .base.ref"
+}
 
-# TODO: Add Git ref completion to rv start
+code-review-start "$(github_merge_base)"
