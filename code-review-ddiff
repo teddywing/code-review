@@ -1,4 +1,6 @@
-# Copyright (c) 2019, 2023  Teddy Wing
+#!/bin/sh
+
+# Copyright (c) 2023  Teddy Wing
 #
 # This file is part of Code Review.
 #
@@ -15,25 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Code Review. If not, see <https://www.gnu.org/licenses/>.
 
-function _code_review () {
-	local cur
-	local subcommands="changed-files commits ddiff diff difftool gh-start log start stat"
+SCRIPT="$(dirname "$0")"
+source "$SCRIPT/code-review-database"
 
-	COMPREPLY=()
-	cur=${COMP_WORDS[COMP_CWORD]}
 
-	case "$COMP_CWORD" in
-	1 | 2)
-		COMPREPLY=( $( compgen -W "$subcommands" -- $cur ) )
-		;;
-	3)
-		COMPREPLY=()
-		;;
-	esac
-
-	return 0
-}
-
-complete -o default -F _code_review code-review
-
-# TODO: Add Git ref completion to rv start
+git -c core.pager='delta' diff "$(get_merge_base)" "$@"
