@@ -72,6 +72,11 @@ function get_merge_base () {
 	local head="$(current_branch)"
 	local default_base='master'
 
+	if [ -n "$CODE_REVIEW_BASE" ]; then
+		echo "$CODE_REVIEW_BASE"
+		return 0
+	fi
+
 	if git config remote.origin.url > /dev/null; then
 		default_base='origin/master'
 	fi
