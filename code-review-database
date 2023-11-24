@@ -73,7 +73,7 @@ function get_merge_base () {
 	local default_base='master'
 
 	if [ -n "$CODE_REVIEW_BASE" ]; then
-		echo "$CODE_REVIEW_BASE"
+		echo "$CODE_REVIEW_BASE"...
 		return 0
 	fi
 
@@ -84,7 +84,7 @@ function get_merge_base () {
 	sqlite3 "$DATABASE" <<-SQL
 		BEGIN TRANSACTION;
 
-		SELECT ifnull(max(base), '$default_base')
+		SELECT ifnull(max(base), '$default_base') || '...'
 		FROM merge_bases
 		WHERE head = '$head'
 		LIMIT 1;
