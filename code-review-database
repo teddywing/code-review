@@ -70,10 +70,10 @@ function create_merge_base_from_current () {
 
 function get_merge_base () {
 	local head="$(current_branch)"
-	local default_base='master...'
+	local default_base='master'
 
 	if git config remote.origin.url > /dev/null; then
-		default_base='origin/master...'
+		default_base='origin/master'
 	fi
 
 	sqlite3 "$DATABASE" <<-SQL
