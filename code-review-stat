@@ -21,4 +21,4 @@ SCRIPT="$(dirname "$0")"
 source "$SCRIPT/code-review-database"
 
 
-git diff --stat "$(get_merge_base)"
+git diff --stat "$(get_merge_base)" "$@"
