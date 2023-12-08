@@ -35,4 +35,4 @@ github_merge_base() {
 			| .base.ref"
 }
 
-code-review-start "$(github_merge_base)"
+code-review-start "origin/$(github_merge_base)"
